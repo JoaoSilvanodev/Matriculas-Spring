@@ -1,0 +1,29 @@
+name: Java CI Spring Boot Pipeline
+
+
+on:
+  push:
+    branches: ["main", "master"]
+  pull_request:
+    branches: ["main", "master"]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout de código
+        uses: actions/checkout@v4
+
+      - name: Java 17
+        uses: actions/Setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Permissao no maven wrapper
+        run: chmod +X mvnw
+
+      - name: Compilar e ececutar t.u
+        run: /mvnw clean test
