@@ -1,6 +1,5 @@
 name: Java CI Spring Boot Pipeline
 
-
 on:
   push:
     branches: ["main", "master"]
@@ -11,20 +10,25 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ./MatriculasSpring
+
     steps:
       - name: Checkout de código
         uses: actions/checkout@v4
 
       - name: Configurar Java 17
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-          cache-dependency-path: './MatriculasSpring/pom.xml'
+          cache-dependency-path: 'MatriculasSpring/pom.xml'
 
       - name: Permissao no maven wrapper
-        run: chmod +X mvnw
+        run: chmod +x mvnw
 
-      - name: Compilar e ececutar t.u
-        run: /mvnw clean test
+      - name: Compilar e Executar Testes Unitarios
+        run: ./mvnw clean test
+
